@@ -1,7 +1,0 @@
-echo  enter socket_client_udp -h for instructions
-echo  If the machine was reset, you will need to enter
-echo        arp -s 172.4.1.1 00:03:fb:ac:2A:20
-echo  This script runs a CLI.
-./socket_client_udp -s 172.4.1.11 -p 9011  -b 172.4.1.10  -c 9012  
-#./socket_client_udp -s 172.4.1.11 -p 9011  -b 172.4.1.10  -c 9012 -d 1 
-

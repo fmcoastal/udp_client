@@ -1,0 +1,43 @@
+------X--------------
+echo  enter socket_client_udp -h for instructions
+./socket_client_udp -s 172.16.2.11 -p 9011  -b 172.16.1.10 -c9012 
+
+--------XX----------
+echo  enter socket_client_udp -h for instructions
+./socket_client_udp -s 172.4.1.1 -p 9090i -b 172.4.1.2 -f packetdata
+
+# TCP dump acutally captures data from the Ethernet port. 
+# tcpdump -w payload.pcap -i eth0
+#
+#
+#  http://xmodulo.com/2013/05/how-to-capture-and-replay-network-traffic-on-linux.html
+#
+#
+tcpreplay --intf1=eth0 payload.pcap
+
+[root@rover udp_client]# ./playpcap  -i eth0  -r /depot/udp_client/payload.pcap
+Failed to open /depot/udp_client/payload.pcap
+[root@rover udp_client]# ls
+a.map  Makefile  mkaddr.c  mkaddr.h  packetdata  payload.pcap  playpcap  save  socket_client_udp  socket_client_udp.c  socket_client_udp.o  x
+
+In wireshark,  File needs to be saved ad Redhat 6.1 tcpdump - libpcap 
+
+
+[root@rover udp_client]# ./playpcap  -i eth0  -r /depot/udp_client/payload.pcap
+Sent 1 packets in 0 seconds.
+[root@rover udp_client]# vim x
+
+
+
+arp -
+
+
+-------------XC-------------------------------------
+
+echo  enter socket_client_udp -h for instructions
+echo  If the machine was reset, you will need to enter
+echo        arp -s 172.4.1.1 00:03:fb:ac:2A:20
+echo  This script runs a CLI.
+./socket_client_udp -s 172.4.1.11 -p 9011  -b 172.4.1.10  -c 9012  
+#./socket_client_udp -s 172.4.1.11 -p 9011  -b 172.4.1.10  -c 9012 -d 1 
+

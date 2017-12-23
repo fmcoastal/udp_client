@@ -124,6 +124,11 @@ int rx(void* arg)
     unsigned int sz;  
     struct sockaddr_in adr;            /* AF_INET */
     char dgram[512];               /* Recv buffer */
+// for time stamps
+   time_t rawtime ;
+   struct tm * timeinfo;
+
+
     int s = pdb->socket;
 
     while( pdb->done == 0) // this will be set by teh back door
@@ -147,10 +152,24 @@ int rx(void* arg)
         /*
          * Report Result:
          */
-        printf("Result from %s port %u :\n\t'%s'\n",
+#if 0
+        printf("\nResult from %s port %u :'%s'\n",
             inet_ntoa(adr.sin_addr),
             (unsigned)ntohs(adr.sin_port),
             dgram);
+        printf("Enter format string :");
+        fflush(stdout);
+#else
+        time (&rawtime);
+        timeinfo = localtime (&rawtime);
+        printf("c%d:%d:%d %s:%u %s\n",timeinfo->tm_hour,timeinfo->tm_min
+                               ,timeinfo->tm_sec
+                               , inet_ntoa(adr.sin_addr)
+                               ,(unsigned)ntohs(adr.sin_port)
+                               ,dgram);
+
+
+#endif
 
     }
     printf("End of  Rx Thread\n");
@@ -217,7 +236,7 @@ main(int argc,char **argv) {
     char SndFileName[FILE_NAME_SIZE]; /* send buffer file name */
 
 #ifdef SPAWN_THREADS
-    int i;
+    int i = 0;
     int err;
     datablock_t db;
 
@@ -273,7 +292,7 @@ main(int argc,char **argv) {
         }
     }
     printf("Command Line Arguments:\n");
-    printf("  %16s Server IP:Port\n",srvr_addr);
+    printf("  %16s Server IP (machine we want to connect to)\n",srvr_addr);
     printf("              %4d Server Port\n",adr_srvr_port);
     printf("  %16s Bind IP\n",(bind_addr[0] == 0?"Default Port":bind_addr));
     printf("              %4d bind Port\n",adr_bind_port);
@@ -395,11 +414,12 @@ main(int argc,char **argv) {
 
 
       printf(" ->enter \"quit\"  to exit\n");
-      for (;;) {
-        /*
-         * Prompt user for input data to send:
-         */
-        fputs("\nEnter format string: ",stdout);
+      /*
+       * Prompt user for input data to send:
+       */
+      fputs("\njust type, data send on <cr> ",stdout);
+      
+    for (;;) {
         if ( !fgets(dgram,sizeof dgram,stdin) )
             break;                        /* EOF */
 
