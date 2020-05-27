@@ -5,6 +5,17 @@ EVOL: BE careful you do not use any network address currenly assigned inside
     the corporation. You may end up sending traffic out on the corportate 
     network as opposed to your closed connection 
 
+Setup:
+     -----------------------                     -----------------------  
+    |                       |                   |                       | 
+    | Server                |                   | Client                |   
+    |                       |                   |                       | 
+    | p5p1                  |                   | p5p2                  | 
+    | ip:   192.168.2.10/24 |                   | ip:   192.168.2.20/24 | 
+    | Port: 50020           |===================| Port: xxxx            | 
+    |                       |                   |                       | 
+    ------------------------                    ------------------------                             
+
 HELP:
 
     enter socket_client_udp -h for instructions
@@ -12,7 +23,7 @@ HELP:
     tcpdump is your friend to figure out what is going on :-)
 
 Example: 
-./socket_client_udp -s 172.4.1.1 -p 9090 -b 172.4.1.2 -f packetdata
+./socket_client_udp -s 192.168.2.10 -p 50020 -b 192.168.2.20 -f packetdata
 
 
 Notes Route:
@@ -20,16 +31,16 @@ Notes Route:
    If you have two machines plugged back together, you may need to add
    manual routing information so the packet goes out the correct inteface
 
-      route add -net 172.4.1.0/24 dev p5p1
+      route add -net 192.168.2.10/24 dev p5p1
 
-      route del 172.4.1.0/24 dev p5p1
+      route del 192.168.2.10/24 dev p5p1
 
 Notes: ARP:
 
    If the machine was reset, and your interface will not respond to an ARP
    request, you may need to re-enter mac address for target IP address
 
-        arp -s 172.4.1.11 00:03:fb:ac:2A:20
+        arp -s 192.168.2.20 00:03:fb:ac:2A:20
 
 
 Notes: capturing PCAP file.
