@@ -41,6 +41,7 @@ Notes: ARP:
    request, you may need to re-enter mac address for target IP address
 
         arp -s 192.168.2.20 00:03:fb:ac:2A:20
+        ip -4 neigh add 192.168.2.20 lladdr 00:03:fb:ac:2A:20 dev p5p1
 
 
 Notes: capturing PCAP file.
